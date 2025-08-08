@@ -1,19 +1,20 @@
-version: "3.3"
+version: "3.9"
+
 services:
-  server:
-    container_name: stremio_server
-    image: stremio/server:latest
+  stremio-server:
+    image: stremio/server
+    container_name: stremio-server
     ports:
-      - 11470:11470
-      - 12470:12470
-    volumes:
-      - /bin/ffmpeg:/bin/ffmpeg:ro
-      - /bin/ffprobe:/bin/ffprobe:ro
-    networks:
-      - proxy
+      - "11470:11470"   # HTTP port
+      - "12470:12470"   # HTTPS port
     environment:
-      - FFMPEG_BIN=/bin/ffmpeg
-      - FFPROBE_BIN=/bin/ffprobe
-      # Uncomment and set value as needed
-      #- APP_PATH=""
-      #- NO_CORS=0 
+      NO_CORS: "1"
+      AUTO_SERVER_URL: "1"
+      CASTING_DISABLED: "1"
+    volumes:
+      - stremio-data:/root/.stremio-server
+    restart: unless-stopped
+
+volumes:
+  stremio-data:
+
