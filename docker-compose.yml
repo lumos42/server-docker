@@ -5,16 +5,16 @@ services:
     image: stremio/server
     container_name: stremio-server
     ports:
-      - "11470:11470"   # HTTP port
-      - "12470:12470"   # HTTPS port
+      - "11470:11470"
+      - "12470:12470"
     environment:
-      NO_CORS: "1"
-      AUTO_SERVER_URL: "1"
-      CASTING_DISABLED: "1"
+      - NO_CORS=1
+      - AUTO_SERVER_URL=1
+      - CASTING_DISABLED=1
     volumes:
       - stremio-data:/root/.stremio-server
+    command: bash -c "CASTING_DISABLED=1 node server.js"
     restart: unless-stopped
 
 volumes:
   stremio-data:
-
